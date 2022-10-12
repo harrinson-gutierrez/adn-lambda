@@ -25,12 +25,7 @@ const executeLambda = async (adn: string[]): Promise<any> => {
 
 describe('handler', () => {
     it('Its a Clon', async () => {
-        const response = await executeLambda(["WSYEWW", "EWWYYY", "EYWSSY", "WSYWEY", "WESSYY", "YEEEES"]);
+        const response = await executeLambda(["WSYEWW","EWWYYY","EYWSSY","WSYWEY","WESSYY","YEEEES"]);
         expect(response).to.have.property("statusCode").equal(200);
     })
-    /*
-       it('Its not a Clon', async () => {
-            const response = await executeLambda(["WSYEWW", "EWWYYY", "EYWSSY", "WSYWEY", "WESSYY", "YEEEES"]);
-            expect(response).to.have.property("statusCode").equal(200);
-        })*/
 });

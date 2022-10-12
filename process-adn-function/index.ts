@@ -28,8 +28,12 @@ export const handler = async (event: SQSEvent): Promise<APIGatewayProxyResult> =
     try {
         console.log("Searching ADN in DynamoDB");
         const data = await documentClient.query({
-            TableName: "adn",
-            KeyConditionExpression: "adn = :id",
+            TableName: "ADN",
+            IndexName: "adn-index",
+            KeyConditionExpression: "#adn = :id",
+            ExpressionAttributeNames: {
+                "#adn" : "adn"
+            },
             ExpressionAttributeValues: {
                 ":id": joinAdn,
             },
@@ -39,12 +43,12 @@ export const handler = async (event: SQSEvent): Promise<APIGatewayProxyResult> =
             console.log("Creating new ADN into DynamoDB");
 
             var params = {
-                TableName: "adn",
+                TableName: "ADN",
                 Item: {
                     "adn": joinAdn,
                     "sequence": input.adn,
-                    "is_clon": input.isClon,
-                    "created_at": new Date().toISOString(),
+                    "type": input.isClon ? "CLON" : "FRIEND",
+                    "created_at": new Date().getTime().toString(),
                 }
             }
             console.log("Params:", JSON.stringify(params));

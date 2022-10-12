@@ -18,6 +18,7 @@ export interface ADNOuput {
 
 export const handler = async (event: APIGatewayEvent): Promise<APIGatewayProxyResult> => {
 
+    console.log("Event", event);
 
     const body = JSON.parse(event.body as string) as ADNInput;
 
