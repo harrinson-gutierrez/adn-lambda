@@ -24,6 +24,11 @@ Puede ejecutar los test con
 
 npm run test
 
+Agregar variables de entorno creando un archivo .env en la base del proyecto
+
+ACCESS_KEY=
+ACCESS_SECRET=
+
 Si quiere compilar la funcion lo puede hacer atravez del tookit en VS o manualmente 
 Subiendo la version a la funcion lambda
 
