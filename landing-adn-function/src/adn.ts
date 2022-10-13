@@ -1,43 +1,65 @@
-import { listToMatrix } from "./matrix";
+import { getColumns, getDiagonals, getRows, listToMatrix } from "./matrix";
 import { is_Natural } from "./number";
 
-function validateCharacterStructure(join: string){
-    for(let i=0; i<join.length; i++){
-        if(join[i] !== 'W' && join[i] !== 'E' && join[i] !== 'Y' && join[i] !== 'S'){
+function validateCharacterStructure(join: string) {
+    for (let i = 0; i < join.length; i++) {
+        if (join[i] !== 'W' && join[i] !== 'E' && join[i] !== 'Y' && join[i] !== 'S') {
             throw new Error("Its not character W,E,Y,S");
         }
     }
 }
 
-function validateMatrixStructure(adn:string[], joinAdn: string){
+function validateMatrixStructure(joinAdn: string) {
 
     let sqrJoinAdn = Math.sqrt(joinAdn.length);
 
-    console.log("Natural number", sqrJoinAdn);
-    if(!is_Natural(sqrJoinAdn)){
+    if (!is_Natural(sqrJoinAdn)) {
         throw new Error("Its not matrix n*n");
     }
-
-    let elementsPerSubArray = sqrJoinAdn / 4;
-
-    console.log("Element per matrix", elementsPerSubArray);
-
-    let matrix = listToMatrix(adn as [], elementsPerSubArray);
-
-    console.log("Matrix", matrix);
 }
+
+function checkConsecutive(lineArray, tope) {
+    let last = '';
+    let actual = '';
+    let count = 0;
+    for (let i = 0; i <= lineArray.length - 1; i++) {
+        last = (i == 0) ? lineArray[0] : lineArray[i - 1];
+        actual = lineArray[i];
+
+        if (last == actual) {
+            count++;
+
+            if (count == tope)
+                return true;
+        }
+    }
+    return false;
+}
+
+function validateConsecutive(adn: string[]): boolean {
+    let matrix = listToMatrix(adn);
+    console.log("Matrix", matrix);
+
+    let diagonals = getDiagonals(matrix);
+    let columns = matrix.map((col, i) => getColumns(matrix, i));
+    let rows = matrix.map((col, i) => getRows(matrix, i));
+    let group = [...diagonals, ...columns, ...rows];
+
+    let findClon = group.find((line) => checkConsecutive(line, 4));
+
+    console.log("Find Clon", findClon);
+    
+    return findClon?.length > 0;
+}
+
 
 export function isClon(adn: string[]): boolean {
 
-    var sequence = [];
-
     let join = adn.join().replace(/,/g, "");
-
-    console.log("join", join);
     
     validateCharacterStructure(join);
 
-    validateMatrixStructure(adn, join);
+    validateMatrixStructure(join);
 
-    return false;
+    return validateConsecutive(adn);
 } 

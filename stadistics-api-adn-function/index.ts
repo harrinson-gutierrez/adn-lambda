@@ -28,7 +28,7 @@ export const handler = async (event: APIGatewayEvent): Promise<APIGatewayProxyRe
         }
     }).promise();
 
-    let clonCount = data.ScannedCount;
+    let friendCount = data.ScannedCount;
 
     console.log("Searching ADN CLON in DynamoDB");
 
@@ -43,7 +43,7 @@ export const handler = async (event: APIGatewayEvent): Promise<APIGatewayProxyRe
         }
     }).promise();
 
-    let friendCount = data2.ScannedCount;
+    let clonCount = data2.ScannedCount;
 
     let average = (friendCount! * 100) / (clonCount! + friendCount!);
 
