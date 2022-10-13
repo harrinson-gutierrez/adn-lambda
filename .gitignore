@@ -12,6 +12,7 @@ lib-cov
 *.out
 *.pid
 *.gz
+*.env
 
 pids
 logs

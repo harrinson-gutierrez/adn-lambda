@@ -1,12 +1,7 @@
 import { APIGatewayEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { isClon } from './src/adn';
 import AWS from 'aws-sdk';
-var sqs = new AWS.SQS({ region: 'us-east-1'});
-AWS.config.update({
-    region: 'us-east-1',
-    accessKeyId: "AKIA5RRY3JSXCMWLZUIG",
-    secretAccessKey: "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"
-});
+
 export interface ADNInput {
     adn: string[]
 }
@@ -17,6 +12,15 @@ export interface ADNOuput {
 }
 
 export const handler = async (event: APIGatewayEvent): Promise<APIGatewayProxyResult> => {
+
+    AWS.config.update({
+        region: "us-east-1",
+        accessKeyId: process.env.ACCESS_KEY,
+        secretAccessKey: process.env.ACCESS_SECRET
+    });
+    
+    var sqs = new AWS.SQS({ region: 'us-east-1'});
+
 
     console.log("Event", event);
 

@@ -17,13 +17,11 @@ export const handler = async (event: SQSEvent): Promise<APIGatewayProxyResult> =
 
     AWS.config.update({
         region: "us-east-1",
-        accessKeyId: "AKIA5RRY3JSXCMWLZUIG",
-        secretAccessKey: "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"
+        accessKeyId: process.env.ACCESS_KEY,
+        secretAccessKey: process.env.ACCESS_SECRET
     });
 
     var documentClient = new AWS.DynamoDB.DocumentClient();
-
-    //////////////////////////////////
 
     try {
         console.log("Searching ADN in DynamoDB");
